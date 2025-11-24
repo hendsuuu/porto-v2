@@ -5,6 +5,10 @@ import gsap from "gsap";
 import { CustomBounce } from "gsap/CustomBounce";
 import CustomEase from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import StaggeredMenu from "@/components/StaggeredMenu";
+import BongoCat from "@/components/BongoCat";
+import PixelBlast from "@/components/PixelBlast";
 
 export default function Home() {
   const ballRef = useRef<HTMLDivElement>(null);
@@ -13,6 +17,18 @@ export default function Home() {
 
   const [showContent, setShowContent] = useState(false);
 
+  const menuItems = [
+    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+    { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
+    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+  ];
+
+  const socialItems = [
+    { label: 'Twitter', link: 'https://twitter.com' },
+    { label: 'GitHub', link: 'https://github.com' },
+    { label: 'LinkedIn', link: 'https://linkedin.com' }
+  ];
   gsap.registerPlugin(CustomEase, CustomBounce, ScrollTrigger);
 
   useEffect(() => {
@@ -43,7 +59,7 @@ export default function Home() {
         "<"
       )
       .to(ballRef.current, {
-        scale: 70,
+        scale: 90,
         duration: 0.9,
         ease: "power3.inOut",
       })
@@ -59,8 +75,50 @@ export default function Home() {
             { opacity: 0 },
             { opacity: 1, duration: 0.7 }
           );
+          gsap.fromTo(
+            "#firstname",
+            { x: -100, opacity: 1 },
+            { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
+          );
+          tl.fromTo(
+            "#lastname",
+            { x: -100, opacity: 1 },
+            { x: 50, opacity: 1, duration: 1, ease: "power3.out"}
+          ).fromTo("#firstname",
+            { x: 0 },
+            {
+            x: -550,
+            duration: 1,
+            skewX: 30,
+            opacity: 0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: "top top",  
+              end: "bottom-=100 top",
+              scrub: true,
+              markers: false,
+            },
+          })
+          .fromTo("#lastname",
+            { x: 50 },
+            {
+            x: 550,
+            duration: 0.8,
+            opacity: 0,
+            skewX: -30,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: "top top", 
+              end: "bottom-=100 top",
+              scrub: true,
+              markers: false,
+            },
+          });
+             
 
-          // 🔥 ANIMASI LINE HORIZONTAL
+          // ANIMASI LINE HORIZONTAL
           gsap.fromTo(
             lineFillRef.current,
             { width: 0 },
@@ -70,8 +128,9 @@ export default function Home() {
               scrollTrigger: {
                 trigger: contentRef.current,
                 start: "top top",
-                end: "bottom top",
+                end: "bottom-=100 top",
                 scrub: true,
+                markers: false,
               },
             }
           );
@@ -82,45 +141,98 @@ export default function Home() {
   return (
     <>
       <div className="w-full h-screen bg-[#F8FAB4] overflow-hidden relative">
-
         {/* Ball */}
         <div
           ref={ballRef}
           className="w-10 h-10 rounded-full bg-[#FFC7A7] shadow-lg absolute left-1/2 -top-10"
           style={{ transform: "translateX(-50%)" }}
         />
-
-        {/* SECTION 1 — Horizontal Line */}
-        {showContent && (
+      </div>
+      {showContent && (
+        <>
+        <div style={{ height: '100vh', background: '#1a1a1a',zIndex: 54, position: 'fixed', top: 0, right: 0,  }}>
+          
+          <StaggeredMenu
+              position="right"
+              items={menuItems}
+              socialItems={socialItems}
+              displaySocials={true}
+              displayItemNumbering={true}
+              menuButtonColor="#000000ff"
+              openMenuButtonColor="#000000ff"
+              changeMenuColorOnOpen={true}
+              colors={['#F08787','#FEE2AD']}
+              logoUrl="/Logo.png"
+              accentColor="#ff6b6b"
+              onMenuOpen={() => console.log('Menu opened')}
+              onMenuClose={() => console.log('Menu closed')} isFixed={true}          />
+        </div>
           <div
             ref={contentRef}
-            className="absolute inset-0 w-full h-full bg-[#FFC7A7] flex flex-col gap-3 items-center justify-center p-[5em] z-50"
+            className="absolute inset-0 w-full h-full bg-[#FFC7A7] flex gap-3 items-center justify-center"
             style={{ opacity: 0 }}
           >
-            <div className="w-full h-full bg-[#FFC7A7] p-4">
-              <h1 className="text-4xl font-bold mb-4">Welcome to My Portfolio</h1>
+            <div className="flex flex-col p-[5em] gap-6 w-2/4 h-full">
+              {/* <div style={{ width: '100vw', height: '100vh', position: 'absolute', top: 0, right: 0, zIndex: 51 }}>
+                <PixelBlast
+                  variant="square"
+                  pixelSize={6}
+                  color="#eb0909ff"
+                  patternScale={3}
+                  patternDensity={1.2}
+                  pixelSizeJitter={0.5}
+                  enableRipples
+                  rippleSpeed={0.4}
+                  rippleThickness={0.12}
+                  rippleIntensityScale={1.5}
+                  liquid={false}
+                  liquidStrength={0.12}
+                  liquidRadius={1.2}
+                  liquidWobbleSpeed={5}
+                  speed={0.6}
+                  edgeFade={0.25}
+                  transparent={true}
+                />
+              </div> */}
+              {/* <div className="w-full h-full flex items-center justify-center z-53">
+                <BongoCat />
+              </div> */}
+              <div className="w-full h-full bg-[#FFC7A7] p-4">
+                <h1 id="firstname" className="absolute bottom-50 text-8xl font-bold italic mb-4 z-53">HENDRA</h1><br />
+                <h1 id="lastname" className="absolute bottom-25 text-8xl font-bold italic mb-4 z-53">SUTRISNO</h1>
+              </div>
+              <div className="relative w-full h-[5px] bg-gray-200 rounded-full overflow-hidden z-53">
+                <div
+                  ref={lineFillRef}
+                  className="absolute left-0 top-0 h-full bg-black rounded-full"
+                  style={{ width: 0 }}
+                />
+              </div>
             </div>
-            <div className="relative w-full h-[5px] bg-gray-200 rounded-full overflow-hidden">
-              <div
-                ref={lineFillRef}
-                className="absolute left-0 top-0 h-full bg-black rounded-full"
-                style={{ width: 0 }}
+            <div className="w-2/4 h-full z-53">
+              <Image
+                src="/picture.png"
+                alt="Logo"
+                width={700}
+                height={700}
+                className="object-cover w-full h-full rounded-md z-53"
+                style={{zIndex:53}}
               />
             </div>
           </div>
+       
+          <div className="w-full h-[100vh] bg-white flex items-center justify-center z-50">
+            <h1 className="text-black text-4xl font-bold">Section 2</h1>
+          </div>
+          <div className="w-full h-[100vh] bg-[#FEE2AD] flex items-center justify-center z-50">
+            <h1 className="text-black text-4xl font-bold">Section 3</h1>
+          </div>
+          <div className="w-full h-[100vh] bg-white flex items-center justify-center z-50">
+            <h1 className="text-black text-4xl font-bold">Section 4</h1>
+          </div>
+          </>
         )}
-      </div>
-
-      {/* OTHER SECTIONS */}
-      <div className="w-full h-[100vh] bg-white flex items-center justify-center">
-        <h1 className="text-black text-4xl font-bold">Section 2</h1>
-      </div>
-      <div className="w-full h-[100vh] bg-[#FEE2AD] flex items-center justify-center">
-        <h1 className="text-black text-4xl font-bold">Section 3</h1>
-      </div>
-      <div className="w-full h-[100vh] bg-white flex items-center justify-center">
-        <h1 className="text-black text-4xl font-bold">Section 4</h1>
-      </div>
+      
     </>
   );
 }
