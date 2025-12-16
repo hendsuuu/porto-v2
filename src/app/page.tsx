@@ -7,8 +7,6 @@ import CustomEase from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import StaggeredMenu from "@/components/StaggeredMenu";
-import BongoCat from "@/components/BongoCat";
-import PixelBlast from "@/components/PixelBlast";
 
 export default function Home() {
   const ballRef = useRef<HTMLDivElement>(null);
@@ -30,6 +28,27 @@ export default function Home() {
     { label: 'LinkedIn', link: 'https://linkedin.com' }
   ];
   gsap.registerPlugin(CustomEase, CustomBounce, ScrollTrigger);
+  useEffect(() => {
+  if (!showContent || !contentRef.current) return;
+
+  const ctx = gsap.context(() => {
+    
+    gsap.to(".grid-fill", {
+      maskPosition: "100% 100%",
+      WebkitMaskPosition: "100% 100%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: contentRef.current,
+        start: "top top",
+        end: "top+=300 top",
+        scrub: true,
+        markers: true,
+      },
+    });
+  }, contentRef);
+
+  return () => ctx.revert();
+}, [showContent]);
 
   useEffect(() => {
     if (!ballRef.current) return;
@@ -140,11 +159,11 @@ export default function Home() {
 
   return (
     <>
-      <div className="w-full h-screen bg-[#F8FAB4] overflow-hidden relative">
+      <div className="w-full h-screen bg-[#526D82] overflow-hidden relative">
         {/* Ball */}
         <div
           ref={ballRef}
-          className="w-10 h-10 rounded-full bg-[#FFC7A7] shadow-lg absolute left-1/2 -top-10"
+          className="w-10 h-10 rounded-full bg-[#27374D] shadow-lg absolute left-1/2 -top-10"
           style={{ transform: "translateX(-50%)" }}
         />
       </div>
@@ -158,7 +177,7 @@ export default function Home() {
               socialItems={socialItems}
               displaySocials={true}
               displayItemNumbering={true}
-              menuButtonColor="#000000ff"
+              menuButtonColor="#ffffffff"
               openMenuButtonColor="#000000ff"
               changeMenuColorOnOpen={true}
               colors={['#F08787','#FEE2AD']}
@@ -169,56 +188,36 @@ export default function Home() {
         </div>
           <div
             ref={contentRef}
-            className="absolute inset-0 w-full h-full bg-[#FFC7A7] flex gap-3 items-center justify-center"
+            className="absolute inset-0 w-full h-full bg-[#27374D] flex gap-3 items-center justify-center"
             style={{ opacity: 0 }}
           >
-            <div className="flex flex-col p-[5em] gap-6 w-2/4 h-full">
-              {/* <div style={{ width: '100vw', height: '100vh', position: 'absolute', top: 0, right: 0, zIndex: 51 }}>
-                <PixelBlast
-                  variant="square"
-                  pixelSize={6}
-                  color="#eb0909ff"
-                  patternScale={3}
-                  patternDensity={1.2}
-                  pixelSizeJitter={0.5}
-                  enableRipples
-                  rippleSpeed={0.4}
-                  rippleThickness={0.12}
-                  rippleIntensityScale={1.5}
-                  liquid={false}
-                  liquidStrength={0.12}
-                  liquidRadius={1.2}
-                  liquidWobbleSpeed={5}
-                  speed={0.6}
-                  edgeFade={0.25}
-                  transparent={true}
-                />
-              </div> */}
-              {/* <div className="w-full h-full flex items-center justify-center z-53">
-                <BongoCat />
-              </div> */}
-              <div className="w-full h-full bg-[#FFC7A7] p-4">
-                <h1 id="firstname" className="absolute bottom-50 text-8xl font-bold italic mb-4 z-53">HENDRA</h1><br />
-                <h1 id="lastname" className="absolute bottom-25 text-8xl font-bold italic mb-4 z-53">SUTRISNO</h1>
+            <div className="grid-overlay pointer-events-none absolute inset-0 z-10">
+              <div className="grid-base absolute inset-0" />
+              <div className="grid-fill absolute inset-0" />
+              <div className="photo-circle-fade absolute inset-0 pointer-events-none z-30" />
+            </div>
+            <div className="flex flex-col p-[5em] gap-6 w-2/4 h-full z-40">
+              <div className="w-full h-full p-4">
+                <h1 id="firstname" className="absolute bottom-50 text-8xl text-white font-bold italic mb-4 z-53">HENDRA</h1><br />
+                <h1 id="lastname" className="absolute bottom-25 text-8xl text-white font-bold italic mb-4 z-53">SUTRISNO</h1>
               </div>
               <div className="relative w-full h-[5px] bg-gray-200 rounded-full overflow-hidden z-53">
                 <div
                   ref={lineFillRef}
-                  className="absolute left-0 top-0 h-full bg-black rounded-full"
+                  className="absolute left-0 top-0 h-full bg-[#526D82] rounded-full"
                   style={{ width: 0 }}
                 />
               </div>
             </div>
-            <div className="w-2/4 h-full z-53">
-              <Image
-                src="/picture.png"
-                alt="Logo"
-                width={700}
-                height={700}
-                className="object-cover w-full h-full rounded-md z-53"
-                style={{zIndex:53}}
-              />
-            </div>
+            <div className="w-2/4 h-full z-40">
+                <Image
+                  src="/picture.png"
+                  alt="Logo"
+                  width={700}
+                  height={700}
+                  className="object-cover w-full h-full rounded-md z-30"
+                />
+              </div>
           </div>
        
           <div className="w-full h-[100vh] bg-white flex items-center justify-center z-50">
