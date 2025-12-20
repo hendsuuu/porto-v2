@@ -64,7 +64,7 @@ const techStacks: TechGroup[] = [
     title: "Databases",
     items: [
       { name: "MySQL", icon: <SiMysql color="#52abf0ff" /> },
-      { name: "PostgreSQL", icon: <SiPostgresql color="#4169E1" /> },
+      { name: "Postgres", icon: <SiPostgresql color="#4169E1" /> },
       { name: "MongoDB", icon: <SiMongodb color="#47A248" /> },
     ],
   },
