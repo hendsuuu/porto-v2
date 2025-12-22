@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useEffect, useLayoutEffect, useRef } from "react";
+import { JSX, useLayoutEffect, useRef } from "react";
 import {
   SiJavascript,
   SiTypescript,
@@ -165,8 +165,6 @@ export default function TechStackSection() {
                   <div className="text-base sm:text-lg md:text-3xl">
                     {item.icon}
                   </div>
-
-                  {/* LABEL */}
                   <span className="text-[8px] sm:text-[11px] md:text-sm text-white/60 group-hover:text-white">
                     {item.name}
                   </span>
