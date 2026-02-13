@@ -310,7 +310,7 @@ export default function AboutPage() {
                   priority
                 />
               </div>
-              <div className="lg:block hidden">
+              <div className="lg:block hidden ml-18">
                 <TiltedCard
                   imageSrc="/image/me.jpeg"
                   altText="Hendra Sutrisno - Portfolio"

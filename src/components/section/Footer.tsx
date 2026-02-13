@@ -30,28 +30,40 @@ const footerCols = [
   {
     title: "Explore",
     links: [
-      { label: "About", href: "/about" },
-      { label: "Projects", href: "#projects" },
-      { label: "FAQ", href: "#faq" },
-      { label: "Contact", href: "#contact" },
+      { label: "About", href: "/#about" },
+      { label: "Projects", href: "/#projects" },
+      { label: "FAQ", href: "/#faq" },
+      { label: "Contact", href: "/#contact" },
     ],
   },
   {
     title: "Work",
     links: [
-      { label: "Case Studies", href: "#projects" },
-      { label: "Services", href: "#contact" },
-      { label: "Availability", href: "#contact" },
+      { label: "Case Studies", href: "/#projects" },
+      { label: "Services", href: "/#contact" },
+      { label: "Availability", href: "/#contact" },
       { label: "Resume", href: "/about" },
     ],
   },
   {
     title: "Connect",
     links: [
-      { label: "GitHub", href: "https://github.com", external: true },
-      { label: "LinkedIn", href: "https://linkedin.com", external: true },
-      { label: "Email", href: "mailto:your@email.com", external: true },
-      { label: "Instagram", href: "https://instagram.com", external: true },
+      { label: "GitHub", href: "https://github.com/hendsuuu", external: true },
+      {
+        label: "LinkedIn",
+        href: "https://linkedin.com/in/hendrasutrisno",
+        external: true,
+      },
+      {
+        label: "Email",
+        href: "mailto:sutrishendra07@email.com",
+        external: true,
+      },
+      {
+        label: "Instagram",
+        href: "https://instagram.com/hendsuuuu",
+        external: true,
+      },
     ],
   },
 ];
@@ -63,7 +75,8 @@ function ExternalIcon() {
       height="14"
       viewBox="0 0 24 24"
       fill="none"
-      aria-hidden="true">
+      aria-hidden="true"
+    >
       <path
         d="M7 17L17 7"
         stroke="currentColor"
@@ -89,7 +102,7 @@ export default function Footer() {
     <footer className="relative bg-[color:var(--bg)]">
       {/* Top area */}
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+        <div className="grid justify-between gap-10 lg:grid-cols-[1.2fr_1fr]">
           {/* Left: small brand + socials + meta */}
           <div className="max-w-md">
             <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--ui-border)] bg-[color:var(--surface)] px-4 py-2 backdrop-blur">
@@ -106,7 +119,7 @@ export default function Footer() {
             {/* Social row (mirip laravel: icon-only, subtle) */}
             <div className="mt-6 flex items-center gap-2">
               {socials.map(({ label, href, icon: Icon }) => (
-                <a
+                <Link
                   key={label}
                   href={href}
                   target="_blank"
@@ -121,7 +134,8 @@ export default function Footer() {
         hover:text-[color:var(--ui-accent)]
         transition
         cursor-pointer
-      ">
+      "
+                >
                   <Icon
                     size={16}
                     className="
@@ -129,7 +143,7 @@ export default function Footer() {
           group-hover:scale-110
         "
                   />
-                </a>
+                </Link>
               ))}
             </div>
 
@@ -170,7 +184,8 @@ export default function Footer() {
                             href={l.href}
                             target="_blank"
                             rel="noreferrer"
-                            className={cls}>
+                            className={cls}
+                          >
                             {l.label}
                             <span className="opacity-70">
                               <ExternalIcon />
@@ -210,6 +225,7 @@ export default function Footer() {
             {/* Wordmark besar — ganti teksnya sesuai kamu */}
             <p
               className="
+                text-center
                 select-none
                 leading-[0.85]
                 tracking-tight
@@ -218,8 +234,9 @@ export default function Footer() {
                 text-[clamp(72px,16vw,220px)]
                 font-display
               "
-              aria-hidden="true">
-              HENDRA
+              aria-hidden="true"
+            >
+              HendSuuu
             </p>
           </div>
         </div>
