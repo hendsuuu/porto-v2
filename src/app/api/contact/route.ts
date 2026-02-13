@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 function sanitizeInput(text: string): string {
   return String(text || "")
-    .replace(/<script.*?>.*?<\/script>/gis, "")
+    .replace(/<script.*?>.*?<\/script>/gi, "")
     .replace(/<\/?[^>]+(>|$)/g, "")
     .trim();
 }
@@ -16,7 +16,10 @@ export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => null);
     if (!body) {
-      return NextResponse.json({ success: false, error: "Invalid JSON" }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: "Invalid JSON" },
+        { status: 400 },
+      );
     }
 
     const subjectRaw = body.subject;
@@ -24,12 +27,18 @@ export async function POST(req: Request) {
     const userEmailRaw = body.userEmail;
 
     if (!subjectRaw || !messageRaw || !userEmailRaw) {
-      return NextResponse.json({ success: false, error: "Missing fields" }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: "Missing fields" },
+        { status: 400 },
+      );
     }
 
     const userEmail = sanitizeInput(userEmailRaw);
     if (!isValidEmail(userEmail)) {
-      return NextResponse.json({ success: false, error: "Invalid email" }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: "Invalid email" },
+        { status: 400 },
+      );
     }
 
     const subject = sanitizeInput(subjectRaw).slice(0, 120);
@@ -41,8 +50,11 @@ export async function POST(req: Request) {
 
     if (!EMAIL_USER || !EMAIL_PASS) {
       return NextResponse.json(
-        { success: false, error: "Server misconfigured (EMAIL_USER/EMAIL_PASS)" },
-        { status: 500 }
+        {
+          success: false,
+          error: "Server misconfigured (EMAIL_USER/EMAIL_PASS)",
+        },
+        { status: 500 },
       );
     }
 
@@ -70,6 +82,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Email send failed:", error);
-    return NextResponse.json({ success: false, error: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Server error" },
+      { status: 500 },
+    );
   }
 }
