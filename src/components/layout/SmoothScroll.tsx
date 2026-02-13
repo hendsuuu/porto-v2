@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
-import { usePathname, useSearchParams } from "next/navigation";
 
 export default function SmoothScroll({
   children,
@@ -11,9 +10,6 @@ export default function SmoothScroll({
 }) {
   const lenisRef = useRef<Lenis | null>(null);
   const rafIdRef = useRef<number | null>(null);
-
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   // init once
   useEffect(() => {
@@ -24,7 +20,7 @@ export default function SmoothScroll({
 
     lenisRef.current = lenis;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).__lenis = lenis; // biar bisa dipakai komponen lain (GSAP, anchor handler, dll)
+    (window as any).__lenis = lenis;
 
     const raf = (time: number) => {
       lenis.raf(time);
@@ -42,7 +38,6 @@ export default function SmoothScroll({
       // Support "#id" dan "/#id"
       const url = new URL(href, window.location.href);
 
-      // hanya intercept kalau masih di halaman yang sama (same pathname) dan punya hash
       if (url.origin !== window.location.origin) return;
       if (url.pathname !== window.location.pathname) return;
       if (!url.hash) return;
@@ -56,7 +51,6 @@ export default function SmoothScroll({
 
     document.addEventListener("click", handleClick);
 
-    // kalau konten sering berubah tinggi (images, fonts, data), ResizeObserver bantu banget
     const ro = new ResizeObserver(() => {
       lenis.resize();
     });
@@ -71,25 +65,11 @@ export default function SmoothScroll({
 
       lenis.destroy();
       lenisRef.current = null;
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ((window as any).__lenis === lenis) delete (window as any).__lenis;
     };
   }, []);
-
-  // route change handling (recalc height & reset/clamp)
-  useEffect(() => {
-    const lenis = lenisRef.current;
-    if (!lenis) return;
-
-    // tunggu layout settle 1 frame
-    requestAnimationFrame(() => {
-      lenis.resize();
-
-      // rekomendasi: reset ke atas agar tidak “nyangkut” posisi dari halaman sebelumnya
-      // kalau kamu mau tetap mempertahankan posisi scroll antar halaman, hapus baris ini.
-      // lenis.scrollTo(0, { immediate: true });
-    });
-  }, [pathname, searchParams]);
 
   return <>{children}</>;
 }
