@@ -1,5 +1,6 @@
 "use client";
 
+import { sub } from "motion/react-client";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 export type Lang = "id" | "en";
@@ -29,6 +30,10 @@ const DICT = {
       about: "About",
       contact: "Contact",
       faq: "FAQ",
+    },
+    projects:{
+        subtitle:
+        "Saya telah mengerjakan berbagai proyek, baik secara individu maupun tim. Berikut adalah beberapa proyek pilihan yang menampilkan keterampilan dan pengalaman saya."
     },
     contact: {
       badge: "Contact",
@@ -97,6 +102,10 @@ const DICT = {
     about:{
         im: "I’m",
         desc:"I’m an Informatics Engineering graduate with 1+ YOE building web applications that solve real problems. I’ve worked on 20+ projects, crafting scalable, user-focused solutions from concept to deployment. My stack includes HTML, CSS, JavaScript, PHP, Laravel, and MySQL covering both front-end and back-end development. I thrive in fast-paced environments where ideas move quickly and execution matters. My goal? To build products that are not just functional, but impactful, scalable, and ready to grow."
+    },
+    projects:{
+      subtitle:
+        "I have worked on various projects, both individually and in teams. Here are some selected projects showcasing my skills and experience."
     },
     nav: {
       projects: "Projects",

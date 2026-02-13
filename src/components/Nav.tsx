@@ -144,24 +144,24 @@ function NavInner({
         {/* Desktop menu */}
         <nav className="hidden md:flex flex-1 justify-center">
           <div className="flex items-center gap-1 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] px-1 py-1">
-            <a
-              href="#projects"
+            <Link
+              href="/#projects"
               className="rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
             >
               Projects
-            </a>
+            </Link>
             <Link
               href="/about"
               className="rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
             >
               About
             </Link>
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
             >
               Contact
-            </a>
+            </Link>
           </div>
         </nav>
 
@@ -185,13 +185,13 @@ function NavInner({
       {/* MOBILE PANEL */}
       <div ref={panelRef} className="md:hidden overflow-hidden" style={{ height: 0, opacity: 0 }}>
         <div className="mt-3 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] p-2">
-          <a
-            href="#projects"
+          <Link
+            href="/#projects"
             onClick={close}
             className="block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
           >
             Projects
-          </a>
+          </Link>
           <Link
             href="/about"
             onClick={close}
@@ -199,13 +199,13 @@ function NavInner({
           >
             About
           </Link>
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             onClick={close}
             className="block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
           >
             Contact
-          </a>
+          </Link>
         </div>
       </div>
     </div>

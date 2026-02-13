@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLang } from "../i18n/LanguageProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,6 +56,7 @@ const projects: Project[] = [
 ];
 
 export default function Projects() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -118,7 +120,7 @@ export default function Projects() {
           </h2>
 
           <p className="mt-4 text-base sm:text-lg text-[color:var(--text-secondary)]">
-            Beberapa project pilihan (dummy dulu). Nanti kamu bisa ganti gambar, slug, dan stack sesuai project asli.
+            {t("projects.subtitle")}
           </p>
         </div>
 
