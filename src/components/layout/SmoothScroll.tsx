@@ -4,7 +4,11 @@ import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+export default function SmoothScroll({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const lenisRef = useRef<Lenis | null>(null);
   const rafIdRef = useRef<number | null>(null);
 
@@ -19,6 +23,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     });
 
     lenisRef.current = lenis;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).__lenis = lenis; // biar bisa dipakai komponen lain (GSAP, anchor handler, dll)
 
     const raf = (time: number) => {
@@ -43,7 +48,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       if (!url.hash) return;
 
       const el = document.querySelector(url.hash);
-      if (!el) return;
+      if (!(el instanceof HTMLElement)) return;
 
       e.preventDefault();
       lenis.scrollTo(el, { offset: -100, duration: 1.2 });
@@ -66,6 +71,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
       lenis.destroy();
       lenisRef.current = null;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ((window as any).__lenis === lenis) delete (window as any).__lenis;
     };
   }, []);
@@ -81,7 +87,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
       // rekomendasi: reset ke atas agar tidak “nyangkut” posisi dari halaman sebelumnya
       // kalau kamu mau tetap mempertahankan posisi scroll antar halaman, hapus baris ini.
-    //   lenis.scrollTo(0, { immediate: true });
+      // lenis.scrollTo(0, { immediate: true });
     });
   }, [pathname, searchParams]);
 
