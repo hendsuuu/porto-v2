@@ -25,7 +25,7 @@ export default function BackToTop() {
       gsap.fromTo(
         el,
         { y: 16, opacity: 0, scale: 0.98 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" }
+        { y: 0, opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" },
       );
     } else {
       gsap.to(el, { y: 12, opacity: 0, duration: 0.25, ease: "power2.out" });
@@ -54,7 +54,7 @@ export default function BackToTop() {
       onClick={scrollToTop}
       aria-label="Back to top"
       className={`
-        fixed right-4 bottom-4 z-50
+        fixed right-15 bottom-15 z-50
         h-12 w-12
         cursor-pointer
         rounded-2xl
@@ -69,7 +69,13 @@ export default function BackToTop() {
         ${show ? "pointer-events-auto" : "pointer-events-none opacity-0"}
       `}
     >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
         <path
           d="M12 19V5"
           stroke="currentColor"

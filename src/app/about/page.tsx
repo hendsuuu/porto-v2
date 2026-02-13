@@ -8,6 +8,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/section/Footer";
 import { useLang } from "@/components/i18n/LanguageProvider";
 import { s } from "motion/react-client";
+import TiltedCard from "@/components/TiltedCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -104,7 +105,7 @@ export default function AboutPage() {
       gsap.fromTo(
         "[data-about='intro']",
         { y: 16, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" }
+        { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
       );
 
       const wrap = timelineWrapRef.current;
@@ -174,7 +175,9 @@ export default function AboutPage() {
       const nodes = gsap.utils.toArray<HTMLElement>("[data-tl='item']");
       nodes.forEach((node, i) => {
         const dot = dotsRef.current[i];
-        const card = node.querySelector("[data-tl='card']") as HTMLElement | null;
+        const card = node.querySelector(
+          "[data-tl='card']",
+        ) as HTMLElement | null;
 
         if (dot) {
           gsap.set(dot, { scale: 0.75, opacity: 0.35 });
@@ -204,7 +207,7 @@ export default function AboutPage() {
                 trigger: node,
                 start: "top 82%",
               },
-            }
+            },
           );
         }
       });
@@ -238,7 +241,10 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main ref={rootRef} className="bg-[color:var(--bg)] text-[color:var(--text)]">
+    <main
+      ref={rootRef}
+      className="bg-[color:var(--bg)] text-[color:var(--text)]"
+    >
       {/* Nav */}
       <section className="relative">
         <Nav />
@@ -247,17 +253,24 @@ export default function AboutPage() {
       {/* Intro */}
       <section className="relative">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div data-about="intro" className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div
+            data-about="intro"
+            className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center"
+          >
             {/* Left */}
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-4 py-2 backdrop-blur">
                 <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]" />
-                <p className="text-sm sm:text-base font-medium tracking-wide">About</p>
+                <p className="text-sm sm:text-base font-medium tracking-wide">
+                  About
+                </p>
               </div>
 
               <h1 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight">
                 Hi, {t("about.im")}{" "}
-                <span className="[font-family:var(--font-display)]">Hendra Sutrisno</span>
+                <span className="[font-family:var(--font-display)]">
+                  Hendra Sutrisno
+                </span>
               </h1>
 
               <p className="mt-4 text-justify text-base sm:text-lg text-[color:var(--text-secondary)] leading-relaxed">
@@ -265,22 +278,28 @@ export default function AboutPage() {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-2">
-                {["Next.js", "React", "TypeScript", "Laravel", "GSAP", "Python", "MySQL"].map(
-                  (t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-3 py-1 text-xs text-[color:var(--text-secondary)]"
-                    >
-                      {t}
-                    </span>
-                  )
-                )}
+                {[
+                  "Next.js",
+                  "React",
+                  "TypeScript",
+                  "Laravel",
+                  "GSAP",
+                  "Python",
+                  "MySQL",
+                ].map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-3 py-1 text-xs text-[color:var(--text-secondary)]"
+                  >
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
 
             {/* Right photo */}
             <div className="relative">
-              <div className="relative overflow-hidden rounded-3xl border border-[color:var(--border)] bg-[color:var(--surface)]">
+              <div className="lg:hidden relative overflow-hidden rounded-3xl border border-[color:var(--border)] bg-[color:var(--surface)]">
                 <div className="absolute inset-0 bg-[radial-gradient(700px_300px_at_20%_10%,rgba(76,92,120,0.18),transparent_60%)] dark:bg-[radial-gradient(700px_300px_at_20%_10%,rgba(138,151,166,0.12),transparent_60%)]" />
                 <Image
                   src="/image/me.jpeg"
@@ -289,6 +308,25 @@ export default function AboutPage() {
                   height={1100}
                   className="relative h-[420px] w-full object-cover sm:h-[520px]"
                   priority
+                />
+              </div>
+              <div className="lg:block hidden">
+                <TiltedCard
+                  imageSrc="/image/me.jpeg"
+                  altText="Hendra Sutrisno - Portfolio"
+                  captionText="Hendra Sutrisno - Web Developer"
+                  containerHeight="420px"
+                  containerWidth="380px"
+                  imageHeight="420px"
+                  imageWidth="380px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.05}
+                  showMobileWarning={false}
+                  showTooltip
+                  // displayOverlayContent
+                  overlayContent={
+                    <p className="tilted-card-demo-text">Hendra Sutrisno</p>
+                  }
                 />
               </div>
             </div>
@@ -302,7 +340,9 @@ export default function AboutPage() {
           <div className="text-center max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-4 py-2 backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]" />
-              <p className="text-sm sm:text-base font-medium tracking-wide">Experience</p>
+              <p className="text-sm sm:text-base font-medium tracking-wide">
+                Experience
+              </p>
             </div>
 
             <h2 className="mt-5 text-2xl sm:text-3xl font-semibold tracking-tight">
@@ -336,7 +376,9 @@ export default function AboutPage() {
 
                         {/* Company + role */}
                         <div>
-                          <h3 className="text-lg font-semibold tracking-tight">{it.company}</h3>
+                          <h3 className="text-lg font-semibold tracking-tight">
+                            {it.company}
+                          </h3>
                           <p className="mt-1 text-sm text-[color:var(--text-secondary)]">
                             {it.description}
                           </p>
@@ -365,7 +407,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-
         <Footer />
         {/* bottom fade */}
         {/* <div
@@ -376,7 +417,7 @@ export default function AboutPage() {
           }}
         /> */}
       </section>
-        {/* Footer */}
+      {/* Footer */}
     </main>
   );
 }

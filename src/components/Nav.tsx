@@ -9,7 +9,8 @@ function getInitialDark() {
   if (typeof window === "undefined") return false;
   const stored = localStorage.getItem("theme");
   const prefersDark =
-    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
   return stored ? stored === "dark" : prefersDark;
 }
 
@@ -114,10 +115,22 @@ function NavInner({
       gsap.fromTo(
         panel,
         { height: 0, opacity: 0, y: -6 },
-        { height: "auto", opacity: 1, y: 0, duration: 0.22, ease: "power2.out" }
+        {
+          height: "auto",
+          opacity: 1,
+          y: 0,
+          duration: 0.22,
+          ease: "power2.out",
+        },
       );
     } else {
-      gsap.to(panel, { height: 0, opacity: 0, y: -6, duration: 0.18, ease: "power2.in" });
+      gsap.to(panel, {
+        height: 0,
+        opacity: 0,
+        y: -6,
+        duration: 0.18,
+        ease: "power2.in",
+      });
     }
   }, [open]);
 
@@ -137,28 +150,35 @@ function NavInner({
           onClick={close}
           className="inline-flex items-center gap-1 rounded-xl px-2 py-1 text-sm font-semibold tracking-tight text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
         >
-          <span className="opacity-90">Hendra</span>
-          <span className="opacity-50">.sutrisno</span>
+          <span className="select-none opacity-90">Hendra</span>
+          <span className="select-none opacity-50">.sutrisno</span>
         </Link>
 
         {/* Desktop menu */}
         <nav className="hidden md:flex flex-1 justify-center">
           <div className="flex items-center gap-1 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] px-1 py-1">
             <Link
+              href="/"
+              className="select-none rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
+            >
+              Home
+            </Link>
+
+            <Link
               href="/#projects"
-              className="rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
+              className="select-none rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
             >
               Projects
             </Link>
             <Link
               href="/about"
-              className="rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
+              className="select-none rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
             >
               About
             </Link>
             <Link
               href="/#contact"
-              className="rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
+              className="select-none rounded-lg px-3 py-2 text-sm text-[color:var(--text)] opacity-85 hover:opacity-100 hover:bg-[color:var(--bg-secondary)] transition"
             >
               Contact
             </Link>
@@ -167,8 +187,12 @@ function NavInner({
 
         {/* Right controls */}
         <div className="flex items-center gap-2">
-        <LanguageToggle />
-          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} mounted={mounted} />
+          <LanguageToggle />
+          <ThemeToggle
+            isDark={isDark}
+            onToggle={onToggleTheme}
+            mounted={mounted}
+          />
 
           <button
             type="button"
@@ -183,26 +207,37 @@ function NavInner({
       </div>
 
       {/* MOBILE PANEL */}
-      <div ref={panelRef} className="md:hidden overflow-hidden" style={{ height: 0, opacity: 0 }}>
+      <div
+        ref={panelRef}
+        className="md:hidden overflow-hidden"
+        style={{ height: 0, opacity: 0 }}
+      >
         <div className="mt-3 rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] p-2">
+          <Link
+            href="/"
+            onClick={close}
+            className="select-none block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
+          >
+            Home
+          </Link>
           <Link
             href="/#projects"
             onClick={close}
-            className="block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
+            className="select-none block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
           >
             Projects
           </Link>
           <Link
             href="/about"
             onClick={close}
-            className="block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
+            className="select-none block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
           >
             About
           </Link>
           <Link
             href="/#contact"
             onClick={close}
-            className="block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
+            className="select-none block rounded-lg px-3 py-2 text-sm text-[color:var(--text)] hover:bg-[color:var(--bg-secondary)] transition"
           >
             Contact
           </Link>
@@ -255,9 +290,16 @@ export default function Nav() {
     gsap.set(floating, { y: -16, opacity: 0, pointerEvents: "none" });
     gsap.set(normal, { opacity: 1 });
 
-    const tl = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+    const tl = gsap.timeline({
+      paused: true,
+      defaults: { ease: "power2.out" },
+    });
     tl.to(normal, { opacity: 0, duration: 0.15 }, 0);
-    tl.to(floating, { y: 0, opacity: 1, duration: 0.28, pointerEvents: "auto" }, 0);
+    tl.to(
+      floating,
+      { y: 0, opacity: 1, duration: 0.28, pointerEvents: "auto" },
+      0,
+    );
 
     const FLOAT_AT = 72;
     const onScroll = () => {
@@ -276,7 +318,7 @@ export default function Nav() {
 
   const containerClass = useMemo(
     () => "mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8",
-    []
+    [],
   );
 
   // biar tidak “kedip” saat hydration
@@ -287,14 +329,23 @@ export default function Nav() {
       {/* DEFAULT */}
       <header ref={defaultRef} className="relative z-20 w-full">
         <div className={containerClass}>
-          <NavInner seamless isDark={safeIsDark} onToggleTheme={toggleTheme} mounted={mounted} />
+          <NavInner
+            seamless
+            isDark={safeIsDark}
+            onToggleTheme={toggleTheme}
+            mounted={mounted}
+          />
         </div>
       </header>
 
       {/* FLOATING */}
       <header ref={floatingRef} className="fixed left-0 top-0 z-50 w-full">
         <div className={containerClass}>
-          <NavInner isDark={safeIsDark} onToggleTheme={toggleTheme} mounted={mounted} />
+          <NavInner
+            isDark={safeIsDark}
+            onToggleTheme={toggleTheme}
+            mounted={mounted}
+          />
         </div>
       </header>
     </>

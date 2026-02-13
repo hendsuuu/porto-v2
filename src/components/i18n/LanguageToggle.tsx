@@ -10,6 +10,7 @@ export default function LanguageToggle() {
       type="button"
       onClick={() => setLang(lang === "id" ? "en" : "id")}
       className="
+        select-none
         h-10 px-3
         cursor-pointer
         inline-flex items-center justify-center
